@@ -1,0 +1,1 @@
+I tried to assess Karnataka’s socio-economic landscape, covering agriculture, health, education, infrastructure, and financial inclusion. I explored the relationship among these socio-economic indicators and conducted some statistcial models to find out meaningful results for policy practiotioners.
