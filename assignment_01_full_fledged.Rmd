@@ -1,0 +1,1857 @@
+---
+title: "dealing_with_master_data"
+author: "shobhan sarkar"
+date: "`r Sys.Date()`"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r}
+# Load necessary libraries
+library(ggplot2)
+library(dplyr)
+
+# Load dataset
+data <- read.csv("C:/Users/Shobhan Sarkar/OneDrive/Desktop/DMS692_project/part_data/mobile_internet_accounts_with_aadhar.csv")
+
+
+# Inspect data
+str(data)
+head(data)
+```
+
+```{r}
+colnames(data)
+```
+
+```{r dont run this cell}
+# Adjust the margins to make the plot smaller
+par(mar = c(4, 4, 2, 15)) # Set margins: bottom, left, top, right
+
+# Create the scatter plot
+plot(
+  x = data$Internet_Connections, 
+  y = data$Accounts_seeded_with_Aadhaar_percent,
+  xlab = "Weight",
+  ylab = "Milage",
+  main = "Weight vs Milage",
+  col = "#1b98e0",
+  pch = 16
+)
+
+# Add the trend line
+abline(lm(data$Accounts_seeded_with_Aadhaar_percent ~ data$Internet_Connections), col = "red")
+
+```
+
+```{r}
+library(ggplot2)
+
+# Create the plot with axis labels and a centered title
+ggplot(data = data, aes(x = Internet_Connections, y = Accounts_seeded_with_Aadhaar_percent)) +
+  geom_point() + # Scatter points
+  geom_smooth(method = "lm", col = "red", se = TRUE, show.legend = FALSE) + # Trendline
+  labs(
+    title = "Internet Connections & Aadhaar-Seeded Accounts", # Plot title
+    x = "Internet Connections",          # X-axis label
+    y = "Accounts Seeded with Aadhaar (%)" # Y-axis label
+  ) +
+  theme_minimal() + # Minimal theme
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold") # Center the title
+  )
+ggsave("internet_aadhaar_seeding.png", width = 6, height = 4, units = "in")
+```
+
+```{r}
+png("mobile_phone_distribution.png")
+
+hist(data$mobile_phones_in_thousand, 
+     col = '#8B8378', 
+     main = "Distribution of Mobile Phones in Karnataka (2021)",
+     xlab = "Mobile Phones (in thousands)",
+     ylab = "Count of Sub-districts")
+
+dev.off()
+```
+
+```{r}
+png("Internet_Connections.png")
+
+hist(data$Internet_Connections, 
+     col = '#104E8B', 
+     main = "Distribution of Internet Connections in Karnataka (2021)",
+     xlab = "Internet Connections",
+     ylab = "Count of Sub-districts")
+dev.off()
+```
+
+```{r}
+ggplot(data = data, aes(x = mobile_phones_in_thousand, y = Accounts_seeded_with_Aadhaar_percent)) +
+  geom_point(col='blue') + # Scatter points
+  geom_smooth(method = "lm", col ='black' , se = TRUE, show.legend = FALSE) + # Trendline
+  labs(
+    title = "Mobile Phones & Aadhaar-Seeded Accounts in Karnataka", # Plot title
+    x = "Mobile Phones (in thousand)",          # X-axis label
+    y = "Accounts Seeded with Aadhaar (%)" # Y-axis label
+  ) +
+  theme_minimal() + # Minimal theme
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold") # Center the title
+  )
+ggsave("mobile_aadhaar_seeding.png", width = 6, height = 4, units = "in")
+```
+
+
+```{r}
+#####################################################Working with data 2 #############################
+
+                         
+#############################################################################################
+```
+
+
+
+```{r}
+library(ggplot2)
+data2 <- read.csv("C:/Users/Shobhan Sarkar/OneDrive/Desktop/DMS692_project/part_data/rainfall_highway.csv")
+
+
+# Inspect data
+str(data2)
+head(data2)
+```
+
+```{r}
+# Create the plot with axis labels and a centered title
+ggplot(data = data2, aes(x = Annual_Normal_Rainfall_1961_2010, y = State_Highway)) +
+  geom_point() + # Scatter points
+  geom_smooth(method = "lm", col = "maroon4", se = TRUE, show.legend = FALSE) + # Trendline
+  labs(
+    title = "Annual Normal Rainfall & State Highway in Karnataka", # Plot title
+    x = "Annual Normal Rainfall (1961-2010)",          # X-axis label
+    y = "State Highway" # Y-axis label
+  ) +
+  theme_minimal() + # Minimal theme
+  theme(
+    plot.title = element_text(hjust = 0.5,size = 14, face = "bold"),
+    axis.title.x = element_text(size = 13),
+    axis.title.y = element_text(size = 13)# Center the title
+  )
+ggsave("Rainfall_state_highway.png", width = 6, height = 4, units = "in")
+```
+
+```{r}
+# Create the plot with axis labels and a centered title
+ggplot(data = data2, aes(x = Annual_Normal_Rainfall_1961_2010, y = Length_of_Railway_Lines)) +
+  geom_point() + # Scatter points
+  geom_smooth(method = "lm", col = "maroon4", se = TRUE, show.legend = FALSE) + # Trendline
+  labs(
+    title = "Annual Normal Rainfall & Length of Railway Lines in Karnataka", # Plot title
+    x = "Annual Normal Rainfall (1961-2010)",          # X-axis label
+    y = "Length of Railway Lines (sq_km)" # Y-axis label
+  ) +
+  theme_minimal() + # Minimal theme
+  theme(
+    plot.title = element_text(hjust = 0.5,size = 14, face = "bold"),
+    axis.title.x = element_text(size = 13),
+    axis.title.y = element_text(size = 13)# Center the title
+  )
+ggsave("Rainfall_state_highway.png", width = 6, height = 4, units = "in")
+```
+
+```{r}
+###-------------------------------------------------working with data 3 -----------------------------
+```
+
+
+```{r}
+library(ggplot2)
+data3 <- read.csv("C:/Users/Shobhan Sarkar/OneDrive/Desktop/DMS692_project/part_data/rainfall_road_access.csv")
+
+
+# Inspect data
+str(data3)
+head(data3)
+```
+
+```{r}
+colnames(data3)
+```
+
+
+
+
+```{r}
+# Create the plot with axis labels and a centered title
+ggplot(data = data3, aes(x = Annual_Normal_Rainfall_1961_2010, y = Road_length_per_100_Sqkms_area)) +
+  geom_point() + # Scatter points
+  geom_smooth(method = "lm", col = "maroon4", se = TRUE, show.legend = FALSE) + # Trendline
+  labs(
+    title = "Annual Normal Rainfall & Road Length in Karnataka", # Plot title
+    x = "Annual Normal Rainfall (1961-2010) (in mm)",          # X-axis label
+    y = "Road length per 100 Sqkms area (in km)" # Y-axis label
+  ) +
+  theme_minimal() + # Minimal theme
+  theme(
+    plot.title = element_text(hjust = 0.5,size = 14, face = "bold"),
+    axis.title.x = element_text(size = 13),
+    axis.title.y = element_text(size = 13)# Center the title
+  )
+ggsave("Annual_Normal_RainfalL_and_Road_Length_in_Karnataka.png", width = 6, height = 4, units = "in")
+
+```
+
+
+```{r}
+library(ggplot2)
+
+ggplot(data = data3, aes(x = Annual_Normal_Rainfall_1961_2010, y = Road_length_per_100_Sqkms_area)) +
+  geom_point() + # Scatter points
+  geom_smooth(method = "lm", col = "maroon4", se = TRUE, show.legend = FALSE) + # Trendline
+  labs(
+    title = "Annual Normal Rainfall & Road Length in Karnataka", # Plot title
+    x = "Annual Normal Rainfall (1961-2010) (in mm)",          # X-axis label
+    y = "Road length per 100 Sqkms area (in km)" # Y-axis label
+  ) +
+  theme_minimal() + # Minimal theme
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 14, face = "bold"),
+    axis.title.x = element_text(size = 13),
+    axis.title.y = element_text(size = 13),
+    panel.border = element_rect(color = "black", fill = NA, size = 1) # Add black border
+  )
+
+ggsave("Annual_Normal_Rainfall_and_Road_Length_in_Karnataka_1.png", width = 6, height = 4, units = "in")
+
+```
+
+```{r}
+library(ggplot2)
+
+ggplot(data = data3, aes(x = Annual_Normal_Rainfall_1961_2010, y = Road_length_per_100_Sqkms_area)) +
+  geom_point(col ='#CD4F39') + # Scatter points
+  geom_smooth(method = "lm", col = "maroon4", se = TRUE, show.legend = FALSE) + # Trendline
+  labs(
+    title = "Annual Normal Rainfall & Road Length in Karnataka", # Plot title
+    x = "Annual Normal Rainfall (1961-2010) (in mm)",          # X-axis label
+    y = "Road length per 100 Sqkms area (in km)" # Y-axis label
+  ) +
+  theme_minimal() + # Minimal theme
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 14, face = "bold"),
+    axis.title.x = element_text(size = 13),
+    axis.title.y = element_text(size = 13),
+    panel.border = element_rect(color = "#8B7E66", fill = NA, linewidth = 1),
+    #panel.background = element_rect(fill = "lightblue", color = "black")
+    #panel.grid.major = element_line(color = "gray", linetype = "dashed"),
+    #panel.grid.minor = element_blank()# Updated argument
+  )
+
+ggsave("Annual_Normal_Rainfall_and_Road_Length_in_Karnataka_actual.png", width = 6, height = 4, units = "in")
+
+```
+
+
+
+
+```{r rainfall and habitations}
+# Create the plot with axis labels and a centered title
+ggplot(data = data3, aes(x = Annual_Normal_Rainfall_1961_2010, y = Number_of_habitations)) +
+  geom_point() + # Scatter points
+  geom_smooth(method = "lm", col = "maroon4", se = TRUE, show.legend = FALSE) + # Trendline
+  labs(
+    title = "Annual Normal Rainfall & habitations in Karnataka", # Plot title
+    x = "Annual Normal Rainfall (1961-2010) (in mm)",          # X-axis label
+    y = "Number of Habitations" # Y-axis label
+  ) +
+  theme_minimal() + # Minimal theme
+  theme(
+    plot.title = element_text(hjust = 0.5,size = 14, face = "bold"),
+    axis.title.x = element_text(size = 13),
+    axis.title.y = element_text(size = 13),
+    panel.border = element_rect(color = "black", fill = NA, linewidth = 1),
+# Center the title
+  )
+ggsave("Annual_Normal_RainfalL_and_Habitations_in_Karnataka.png", width = 6, height = 4, units = "in")
+
+
+```
+
+```{r}
+####----------------------------------------- Sex ratio vs internet connections ------------######
+```
+
+```{r}
+data4 <- read.csv("C:/Users/Shobhan Sarkar/OneDrive/Desktop/DMS692_project/part_data/sex_ratio_internet_connections.csv")
+
+
+# Inspect data
+str(data4)
+head(data4)
+```
+
+```{r}
+ggplot(data = data4, aes(x = Total_Sex_Ratio_2011, y = Internet_Connections)) +
+  geom_point() + # Scatter points
+  geom_smooth(method = "lm", col = "maroon4", se = TRUE, show.legend = FALSE) + # Trendline
+  labs(
+    title = "Total Sex Ratio (2011) & Internet Connections in Karnataka", # Plot title
+    x = "Total Sex Ratio (2011)",          # X-axis label
+    y = "Internet Connections" # Y-axis label
+  ) +
+  theme_minimal() + # Minimal theme
+  theme(
+    plot.title = element_text(hjust = 0.5,size = 14, face = "bold"),
+    axis.title.x = element_text(size = 13),
+    axis.title.y = element_text(size = 13)# Center the title
+  )
+ggsave("Total_Sex_Ratio_and_internet_connections.png", width = 6, height = 4, units = "in")
+
+```
+
+```{r}
+#### ------------------------------------ Mudra Internet ----------------------################
+```
+
+
+```{r}
+data5 <- read.csv("C:\\Users\\Shobhan Sarkar\\OneDrive\\Desktop\\DMS692_project\\part_data\\aadhaar_internet_mobile_mudra.csv")
+
+
+# Inspect data
+str(data5)
+head(data5)
+```
+
+```{r}
+colnames(data5)
+```
+```{r}
+ggplot(data = data5, aes(x = PMJDY_accounts_per_lakh_population, y = Enrollment_per_lakh_population_under_PMJJBY)) +
+  geom_point() + # Scatter points
+  geom_smooth(method = "lm", col = "maroon4", se = TRUE, show.legend = FALSE) + # Trendline
+  labs(
+    title = "PMJDY & PMJJBY Enrollment in Karnataka", # Plot title
+    x = "PMJDY accounts per lakh population",          # X-axis label
+    y = "Enrollment per lakh population under PMJJBY" # Y-axis label
+  ) +
+  theme_minimal() + # Minimal theme
+  theme(
+    plot.title = element_text(hjust = 0.5,size = 14, face = "bold"),
+    axis.title.x = element_text(size = 13),
+    axis.title.y = element_text(size = 13),
+    panel.border = element_rect(color = "black", fill = NA, linewidth = 1),
+# Center the title
+  )
+ggsave("PMJDY_and_PMJJBY_enrollment.png", width = 6, height = 4, units = "in")
+
+```
+
+```{r}
+ggplot(data = data5, aes(x = Accounts_seeded_with_Aadhaar_percent, y = Enrollment_per_lakh_population_under_PMJJBY)) +
+  geom_point() + # Scatter points
+  geom_smooth(method = "lm", col = "maroon4", se = TRUE, show.legend = FALSE) + # Trendline
+  labs(
+    title = "PMJDY_accounts & Post_Offices in Karnataka", # Plot title
+    x = "PMJDY accounts per lakh population",          # X-axis label
+    y = "Enrollment per lakh population under PMJJBY" # Y-axis label
+  ) +
+  theme_minimal() + # Minimal theme
+  theme(
+    plot.title = element_text(hjust = 0.5,size = 14, face = "bold"),
+    axis.title.x = element_text(size = 13),
+    axis.title.y = element_text(size = 13)# Center the title
+  )
+```
+
+```{r}
+ggplot(data = data5, aes(x = Total_Bank_Accounts, y = Mudra_Loan_distributed_per_lakh_population)) +
+  geom_point() + # Scatter points
+  geom_smooth(method = "lm", col = "maroon4", se = TRUE, show.legend = FALSE) + # Trendline
+  labs(
+    title = "PMJDY_accounts & Post_Offices in Karnataka", # Plot title
+    x = "PMJDY accounts per lakh population",          # X-axis label
+    y = "Enrollment per lakh population under PMJJBY" # Y-axis label
+  ) +
+  theme_minimal() + # Minimal theme
+  theme(
+    plot.title = element_text(hjust = 0.5,size = 14, face = "bold"),
+    axis.title.x = element_text(size = 13),
+    axis.title.y = element_text(size = 13)# Center the title
+  )
+```
+
+
+```{r}
+colnames(data5)
+```
+
+```{r}
+##### --------------------- data 6--------------------------------------
+```
+
+
+
+```{r}
+data6 <- read.csv("C:\\Users\\Shobhan Sarkar\\OneDrive\\Desktop\\DMS692_project\\part_data\\aadhaar_internet_mobile_mudra_income.csv")
+
+# Inspect data
+str(data6)
+head(data6)
+```
+
+```{r} 
+### Not so good plot ############################
+ggplot(data = data6, aes(x = Per_capita_Income_At_Constant_Prices_2018_19, y = Internet_Connections)) +
+  geom_point() + # Scatter points
+  geom_smooth(method = "lm", col = "maroon4", se = TRUE, show.legend = FALSE) + # Trendline
+  labs(
+    title = "PMJDY_accounts & Post_Offices in Karnataka", # Plot title
+    x = "PMJDY accounts per lakh population",          # X-axis label
+    y = "Enrollment per lakh population under PMJJBY" # Y-axis label
+  ) +
+  theme_minimal() + # Minimal theme
+  theme(
+    plot.title = element_text(hjust = 0.5,size = 14, face = "bold"),
+    axis.title.x = element_text(size = 13),
+    axis.title.y = element_text(size = 13)# Center the title
+  )
+```
+
+
+```{r}
+colnames(data6)
+```
+
+```{r}
+ggplot(data = data6, aes(x = Per_capita_Income_At_Constant_Prices_2018_19, y = households_with_ind_latrine_percent)) +
+  geom_point(color = '#8B5742') + # Scatter points
+  geom_smooth(method = "lm", col = "maroon4", se = TRUE, show.legend = FALSE) + # Trendline
+  labs(
+    title = "Per Capita Income & Households with Individual Latrines", # Plot title
+    x = "Per Capita Income at Constant Prices (2018-19)",          # X-axis label
+    y = "Households with Individual Latrines (%)" # Y-axis label
+  ) +
+  theme_minimal() + # Minimal theme
+  theme(
+    plot.title = element_text(hjust = 0.5,size = 14, face = "bold"),
+    axis.title.x = element_text(size = 13),
+    axis.title.y = element_text(size = 13),
+    panel.border = element_rect(color = "black", fill = NA, linewidth = 1),
+# Center the title
+  )
+ggsave("Per_Capita_Income&Households_with_Individual_Latrines.png", width = 6, height = 4, units = "in")
+
+```
+```{r}
+colnames(data6)
+```
+
+
+```{r PCY and PMJDY}
+# need to re do this with removing outlier
+ggplot(data = data6, aes(x = Per_capita_Income_At_Constant_Prices_2018_19, y = PMJDY_accounts_per_lakh_population)) +
+  geom_point() + # Scatter points
+  geom_smooth(method = "lm", col = "maroon4", se = TRUE, show.legend = FALSE) + # Trendline
+  labs(
+    title = "Per Capita Income & PMJDY accounts", # Plot title
+    x = "Per capita Income At Constant Prices (2018-19)",          # X-axis label
+    y = "PMJDY Accounts" # Y-axis label
+  ) +
+  theme_minimal() + # Minimal theme
+  theme(
+    plot.title = element_text(hjust = 0.5,size = 14, face = "bold"),
+    axis.title.x = element_text(size = 13),
+    axis.title.y = element_text(size = 13)# Center the title
+  )
+#ggsave("Per_Capita_Income&Households_with_Individual_Latrines.png", width = 6, height = 4, units = "in")
+```
+```{r}
+## Good plot ### 
+ggplot(data = data6, aes(x = Per_capita_Income_At_Constant_Prices_2018_19, y = Mudra_Loan_distributed_per_lakh_population)) +
+  geom_point(color = "blue") + # Scatter points in blue
+  geom_smooth(method = "lm", col = "maroon4", se = TRUE, show.legend = FALSE) + # Trendline
+  labs(
+    title = "Per Capita Income & Mudra Loan Distribution", # Plot title
+    x = "Per capita Income At Constant Prices (2018-19)",          # X-axis label
+    y = "Mudra Loan Distributed Per Lakh Population" # Y-axis label
+  ) +
+  theme_minimal() + # Minimal theme
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 14, face = "bold",color = ),
+    axis.title.x = element_text(size = 13),
+    axis.title.y = element_text(size = 13),
+    panel.border = element_rect(color = "#8B6508", fill = NA, linewidth = 1) # Add border
+  )
+
+ggsave("Per_Capita_Income&Mudra_Loan_distributed_per_lakh_population.png", width = 6, height = 4, units = "in")
+```
+
+
+```{r}
+ggplot(data = data6, aes(x = Per_capita_Income_At_Constant_Prices_2018_19, y = Mobile_Phones)) +
+  geom_point(color = 'blue') + # Scatter points
+  geom_smooth(method = "lm", col = "maroon4", se = TRUE, show.legend = FALSE) + # Trendline
+  labs(
+    title = "Per Capita Income & Mobile Phones in Karnataka", # Plot title
+    x = "Per capita Income At Constant Prices (2018-19)",          # X-axis label
+    y = "Mobile Phones" # Y-axis label
+  ) +
+  theme_minimal() + # Minimal theme
+  theme(
+    plot.title = element_text(hjust = 0.5,size = 14, face = "bold"),
+    axis.title.x = element_text(size = 13),
+    axis.title.y = element_text(size = 13),
+    panel.border = element_rect(color = "#8B6508", fill = NA, linewidth = 1) # Add border
+# Center the title
+  )
+
+ggsave("PCY_Mobile.png", width = 6, height = 4, units = "in")
+
+```
+
+```{r}
+ggplot(data = data6, aes(x = Per_capita_Income_At_Constant_Prices_2018_19, y = Total_Sex_Ratio_2011)) +
+  geom_point(color = '#5D478B') + # Scatter points
+  geom_smooth(method = "lm", col = "maroon4", se = TRUE, show.legend = FALSE) + # Trendline
+  labs(
+    title = "Per Capita Income & Sex Ratio in Karnataka", # Plot title
+    x = "Per capita Income At Constant Prices (2018-19)",          # X-axis label
+    y = "Sex Ratio (2011)" # Y-axis label
+  ) +
+  theme_minimal() + # Minimal theme
+  theme(
+    plot.title = element_text(hjust = 0.5,size = 14, face = "bold"),
+    axis.title.x = element_text(size = 13),
+    axis.title.y = element_text(size = 13),
+    panel.border = element_rect(color = "#8B6508", fill = NA, linewidth = 1) # Add border
+# Center the title
+  )
+ggsave("Per_Capita_Income&sex_ratio.png", width = 6, height = 4, units = "in")
+```
+
+```{r}
+## not great but okayish!
+ggplot(data = data6, aes(x = Per_capita_Income_At_Constant_Prices_2018_19, y = Accounts_seeded_with_Aadhaar_percent)) +
+  geom_point() + # Scatter points
+  geom_smooth(method = "lm", col = "maroon4", se = TRUE, show.legend = FALSE) + # Trendline
+  labs(
+    title = "Per Capita Income & Sex Ratio (2011)", # Plot title
+    x = "Per capita Income At Constant Prices (2018-19)",          # X-axis label
+    y = "Sex Ratio (2011)" # Y-axis label
+  ) +
+  theme_minimal() + # Minimal theme
+  theme(
+    plot.title = element_text(hjust = 0.5,size = 14, face = "bold"),
+    axis.title.x = element_text(size = 13),
+    axis.title.y = element_text(size = 13)# Center the title
+  )
+```
+
+
+```{r}
+
+```
+
+
+
+
+
+```{r}
+#### --------------------------------- Data7 ----------------------------------------############
+```
+
+```{r}
+library(ggplot2)
+data7 <- read.csv("C:\\Users\\Shobhan Sarkar\\OneDrive\\Desktop\\DMS692_project\\part_data\\income_mobile.csv")
+
+
+# Inspect data
+str(data7)
+head(data7)
+```
+
+```{r}
+colnames(data7)
+```
+
+```{r mobile phones}
+######## Completely unrooted findings
+ggplot(data = data7, aes(x = Per_capita_Income_At_Constant_Prices_2018_19, y = Mobile_Phones)) +
+  geom_point(col = '#8B5A00') + # Scatter points
+  geom_smooth(method = "lm", col = "maroon4", se = TRUE, show.legend = FALSE) + # Trendline
+  labs(
+    title = "Per Capita Income and Number of Mobile Phones", # Plot title
+    x = "Per capita Income At Constant Prices (2018_19)",          # X-axis label
+    y = "Number of Mobile Phones" # Y-axis label
+  ) +
+  theme_minimal() + # Minimal theme
+  theme(
+    plot.title = element_text(hjust = 0.5,size = 14, face = "bold"),
+    axis.title.x = element_text(size = 13),
+    axis.title.y = element_text(size = 13),
+    panel.border = element_rect(color = "#8B4C39", fill = NA, linewidth = 1)# Center the title
+  )
+ggsave("Per_Capita_Income&mobile_phones.png", width = 6, height = 4, units = "in")
+
+```
+
+```{r}
+##########---------------------------Data 8 --------------------------------------------
+```
+
+```{r}
+data8 <- read.csv("C:\\Users\\Shobhan Sarkar\\OneDrive\\Desktop\\DMS692_project\\part_data\\income_rainfall.csv")
+
+
+# Inspect data
+str(data8)
+head(data8)
+```
+
+
+```{r}
+ggplot(data = data8, aes(x = annual_normal_rainfall_1961_2010, y = per_capita_income_at_constant_prices_2018_2019_in_lakh)) +
+  geom_point(color = '#8B2252') + # Scatter points
+  geom_smooth(method = "lm", col = "black", se = TRUE, show.legend = FALSE) + # Trendline
+  labs(
+    title = "Per Capita Income & Annual Normal Rainfall", # Plot title
+    x = "Annual Normal Rainfall (1961-2010) (in mm)",          # X-axis label
+    y = "PCI @ Const Prices (2018-2019)(in lakh)" # Y-axis label
+  ) +
+  theme_minimal() + # Minimal theme
+  theme(
+    plot.title = element_text(hjust = 0.5,size = 14, face = "bold"),
+    axis.title.x = element_text(size = 13),
+    axis.title.y = element_text(size = 10),
+    panel.border = element_rect(color = "#8B6508", fill = NA, linewidth = 1) # Add border
+# Center the title
+  )
+ggsave("Per_Capita_Income&Normal_Rainfall.png", width = 6, height = 4, units = "in")
+
+```
+
+```{r Lets Start Histograms}
+### ------------- histograms -----------------------###
+```
+
+```{r}
+data9 <- read.csv("C:\\Users\\Shobhan Sarkar\\OneDrive\\Desktop\\DMS692_project\\sex_ratio\\NDAP_REPORT_6243.csv")
+
+
+# Inspect data
+str(data9)
+head(data9)
+```
+
+
+
+```{r sex ratio}
+png("sex_ratio_distribution.png")
+
+hist(data9$Total.Sex.Ratio.2011, 
+     col = '#FFDEAD', 
+     main = "Sex Ratio across Sub-districts in Karnataka (2011)",
+     xlab = "Sex Ratio (2011)",
+     ylab = "Count of Sub-districts")
+abline(v = median(data9$Total.Sex.Ratio.2011, na.rm = TRUE), 
+       col = "violetred4", 
+       lty = 2, 
+       lwd = 2)  # Blue dashed line for the median
+
+# Add Mean Line
+abline(v = mean(data9$Total.Sex.Ratio.2011, na.rm = TRUE), 
+       col = "tan4", 
+       lty = 3, 
+       lwd = 2)  # Green dotted line for the mean
+
+# Add Legend
+legend("topright", 
+       legend = c("Median", "Mean"), 
+       col = c("violetred4", "tan4"), 
+       lty = c(2, 3), 
+       lwd = 2, 
+       bty = "n")
+
+dev.off()
+```
+
+```{r}
+colnames(data5)
+```
+
+```{r mudra loan}
+png("Mudra_loan_distribution.png")
+
+hist(data5$Mudra_Loan_distributed_per_lakh_population, 
+     col = '#EE9A00', 
+     main = "Mudra Loan Distributed Per Lakh Population in Karnataka",
+     xlab = "Mudra Loan Distributed Per Lakh Population",
+     ylab = "Count of Sub-districts")
+# Add Median Line
+abline(v = median(data5$Mudra_Loan_distributed_per_lakh_population, na.rm = TRUE), 
+       col = "springgreen4", 
+       lty = 2, 
+       lwd = 2)  # Blue dashed line for the median
+
+# Add Mean Line
+abline(v = mean(data5$Mudra_Loan_distributed_per_lakh_population, na.rm = TRUE), 
+       col = "tan4", 
+       lty = 3, 
+       lwd = 2)  # Green dotted line for the mean
+
+# Add Legend
+legend("topright", 
+       legend = c("Median", "Mean"), 
+       col = c("springgreen4", "tan4"), 
+       lty = c(2, 3), 
+       lwd = 2, 
+       bty = "n")
+
+dev.off()
+
+```
+
+```{r}
+hist(data5$Accounts_seeded_with_Aadhaar_percent, 
+     col = 'tomato3', 
+     main = "Distribution of Accounts Seeded with Aadhaar (%)",
+     xlab = "Accounts Seeded with Aadhaar (%)",
+     ylab = "Count of Sub-districts")
+
+```
+
+
+```{r aadhaar seeding}
+png("aadhaar_seeding_distribution.png")
+
+# Basic Histogram
+hist(data5$Accounts_seeded_with_Aadhaar_percent, 
+     col = 'tomato3', 
+     main = "Distribution of Accounts Seeded with Aadhaar (%) in Karnataka",
+     xlab = "Accounts Seeded with Aadhaar (%)",
+     ylab = "Count of Sub-districts")
+
+# Add Median Line
+abline(v = median(data5$Accounts_seeded_with_Aadhaar_percent, na.rm = TRUE), 
+       col = "blue", 
+       lty = 2, 
+       lwd = 2)  # Blue dashed line for the median
+
+# Add Mean Line
+abline(v = mean(data5$Accounts_seeded_with_Aadhaar_percent, na.rm = TRUE), 
+       col = "green", 
+       lty = 3, 
+       lwd = 2)  # Green dotted line for the mean
+
+# Add Legend
+legend("topright", 
+       legend = c("Median", "Mean"), 
+       col = c("blue", "green"), 
+       lty = c(2, 3), 
+       lwd = 2, 
+       bty = "n")  # Add a legend to explain the lines
+dev.off()
+```
+
+```{r PMJDY distribution}
+png("PMJDY_distribution.png")
+
+hist(data5$PMJDY_accounts_per_lakh_population, 
+     col = 'mediumorchid4', 
+     main = "PMJDY Accounts Per Lakh Population in Karnataka",
+     xlab = "PMJDY accounts per lakh population",
+     ylab = "Count of Sub-districts")
+# Add Median Line
+abline(v = median(data5$PMJDY_accounts_per_lakh_population, na.rm = TRUE), 
+       col = "blue", 
+       lty = 2, 
+       lwd = 2)  # Blue dashed line for the median
+
+# Add Mean Line
+abline(v = mean(data5$PMJDY_accounts_per_lakh_population, na.rm = TRUE), 
+       col = "green", 
+       lty = 3, 
+       lwd = 2)  # Green dotted line for the mean
+
+# Add Legend
+legend("topright", 
+       legend = c("Median", "Mean"), 
+       col = c("blue", "green"), 
+       lty = c(2, 3), 
+       lwd = 2, 
+       bty = "n")
+dev.off()
+```
+
+```{r rainfall distribution}
+png("rainfall_distribution.png")
+
+
+hist(data2$Annual_Normal_Rainfall_1961_2010, 
+     col = '#B0E2FF', 
+     main = "Annual Normal Rainfall (1961-2010) (in mm) in Karnataka",
+     xlab = "Annual Normal Rainfall (1961-2010) (in mm)",
+     ylab = "Count of Sub-districts")
+# Add Median Line
+abline(v = median(data2$Annual_Normal_Rainfall_1961_2010, na.rm = TRUE), 
+       col = "blue", 
+       lty = 2, 
+       lwd = 2)  # Blue dashed line for the median
+
+# Add Mean Line
+abline(v = mean(data2$Annual_Normal_Rainfall_1961_2010, na.rm = TRUE), 
+       col = "green", 
+       lty = 3, 
+       lwd = 2)  # Green dotted line for the mean
+
+# Add Legend
+legend("topright", 
+       legend = c("Median", "Mean"), 
+       col = c("blue", "green"), 
+       lty = c(2, 3), 
+       lwd = 2, 
+       bty = "n")
+dev.off()
+```
+
+```{r per capita income}
+png("per_capita_income_distribution.png")
+
+hist(data8$per_capita_income_at_constant_prices_2018_2019_in_lakh, 
+     col = '#8B7500', 
+     main = "Per Capita Income at Constant Prices (2018-19) (in Lakh)",
+     xlab = "Per capita Income At Constant Prices (2018-19) (in Lakh)",
+     ylab = "Count of Sub-districts")
+# Add Median Line
+abline(v = median(data8$per_capita_income_at_constant_prices_2018_2019_in_lakh, na.rm = TRUE), 
+       col = "blue", 
+       lty = 2, 
+       lwd = 2)  # Blue dashed line for the median
+
+# Add Mean Line
+abline(v = mean(data8$per_capita_income_at_constant_prices_2018_2019_in_lakh, na.rm = TRUE), 
+       col = "green", 
+       lty = 3, 
+       lwd = 2)  # Green dotted line for the mean
+
+# Add Legend
+legend("topright", 
+       legend = c("Median", "Mean"), 
+       col = c("blue", "green"), 
+       lty = c(2, 3), 
+       lwd = 2, 
+       bty = "n")
+dev.off()
+```
+
+```{r}
+### --------------------------- data 10----------------------------####
+```
+
+
+
+```{r}
+data10 <- read.csv("C:\\Users\\Shobhan Sarkar\\OneDrive\\Desktop\\DMS692_project\\tractors_livestock_data\\NDAP_REPORT_6253.csv")
+```
+
+```{r cropped area}
+png("total_cropped_area.png")
+
+# Basic Histogram
+hist(data10$Total.Cropped.Area, 
+     col = '#008B00', 
+     main = "Distribution of Total Cropped Area in Karnataka (2020)",
+     xlab = "Total Cropped Area ( Hectares )",
+     ylab = "Count of Sub-districts")
+
+# Add Median Line
+abline(v = median(data10$Total.Cropped.Area, na.rm = TRUE), 
+       col = "blue", 
+       lty = 2, 
+       lwd = 2)  # Blue dashed line for the median
+
+# Add Mean Line
+abline(v = mean(data10$Total.Cropped.Area, na.rm = TRUE), 
+       col = "green", 
+       lty = 3, 
+       lwd = 2)  # Green dotted line for the mean
+
+# Add Legend
+legend("topright", 
+       legend = c("Median", "Mean"), 
+       col = c("blue", "green"), 
+       lty = c(2, 3), 
+       lwd = 2, 
+       bty = "n")
+dev.off()
+```
+
+```{r rural population}
+png("rural_population.png")
+
+# Basic Histogram
+hist(data10$Rural.Population, 
+     col = '#FF3030', 
+     main = "Distribution of Rural Population in Karnataka (2020)",
+     xlab = "Rural Population",
+     ylab = "Count of Sub-districts")
+
+# Add Median Line
+abline(v = median(data10$Rural.Population, na.rm = TRUE), 
+       col = "darkslategray", 
+       lty = 2, 
+       lwd = 2)  # Blue dashed line for the median
+
+# Add Mean Line
+abline(v = mean(data10$Rural.Population, na.rm = TRUE), 
+       col = "deeppink4", 
+       lty = 3, 
+       lwd = 2)  # Green dotted line for the mean
+
+# Add Legend
+legend("topright", 
+       legend = c("Median", "Mean"), 
+       col = c("darkslategray", "deeppink4"), 
+       lty = c(2, 3), 
+       lwd = 2, 
+       bty = "n")
+dev.off()
+```
+
+```{r livestock}
+png("livestock_distribution.png")
+
+
+hist(data10$Livestock.units.per.lakh.Rural.Population, 
+     col = '#FFA07A', 
+     main = "Distribution of Livestock Units Per Lakh Rural Population",
+     xlab = "Livestock Units Per Lakh Rural Population",
+     ylab = "Count of Sub-districts")
+
+# Add Median Line
+abline(v = median(data10$Livestock.units.per.lakh.Rural.Population, na.rm = TRUE), 
+       col = "darkslategray", 
+       lty = 2, 
+       lwd = 2)  # Blue dashed line for the median
+
+# Add Mean Line
+abline(v = mean(data10$Livestock.units.per.lakh.Rural.Population, na.rm = TRUE), 
+       col = "deeppink4", 
+       lty = 3, 
+       lwd = 2)  # Green dotted line for the mean
+
+# Add Legend
+legend("topright", 
+       legend = c("Median", "Mean"), 
+       col = c("darkslategray", "deeppink4"), 
+       lty = c(2, 3), 
+       lwd = 2, 
+       bty = "n")
+
+dev.off()
+```
+
+```{r}
+hist(data5$Enrollment_per_lakh_population_under_PMJJBY, 
+     col = '#FFA07A', 
+     main = "Distribution of Livestock Units Per Lakh Rural Population",
+     xlab = "Livestock Units Per Lakh Rural Population",
+     ylab = "Count of Sub-districts")
+
+# Add Median Line
+abline(v = median(data5$Enrollment_per_lakh_population_under_PMJJBY, na.rm = TRUE), 
+       col = "darkslategray", 
+       lty = 2, 
+       lwd = 2)  # Blue dashed line for the median
+
+# Add Mean Line
+abline(v = mean(data5$Enrollment_per_lakh_population_under_PMJJBY, na.rm = TRUE), 
+       col = "deeppink4", 
+       lty = 3, 
+       lwd = 2)  # Green dotted line for the mean
+
+# Add Legend
+legend("topright", 
+       legend = c("Median", "Mean"), 
+       col = c("darkslategray", "deeppink4"), 
+       lty = c(2, 3), 
+       lwd = 2, 
+       bty = "n")
+
+```
+
+
+```{r}
+data11 <- read.csv("C:\\Users\\Shobhan Sarkar\\OneDrive\\Desktop\\DMS692_project\\micro_irrigation\\NDAP_REPORT_6270.csv")
+```
+
+```{r}
+png("area_under_micro_irrigation.png")
+
+hist(data11$Total.Area.under.Micro.Irrigation, 
+     col = '#43CD80', 
+     main = "Distribution of Total Area Under Micro Irrigation",
+     xlab = "Total Area Under Micro Irrigation ( Hectares )",
+     ylab = "Count of Sub-districts")
+
+# Add Median Line
+abline(v = median(data11$Total.Area.under.Micro.Irrigation, na.rm = TRUE), 
+       col = "darkslategray", 
+       lty = 2, 
+       lwd = 2)  # Blue dashed line for the median
+
+# Add Mean Line
+abline(v = mean(data11$Total.Area.under.Micro.Irrigation, na.rm = TRUE), 
+       col = "deeppink4", 
+       lty = 3, 
+       lwd = 2)  # Green dotted line for the mean
+
+# Add Legend
+legend("topright", 
+       legend = c("Median", "Mean"), 
+       col = c("darkslategray", "deeppink4"), 
+       lty = c(2, 3), 
+       lwd = 2, 
+       bty = "n")
+dev.off()
+```
+
+
+```{r}
+data12 <- read.csv("C:\\Users\\Shobhan Sarkar\\OneDrive\\Desktop\\DMS692_project\\mobile_telephone_internetconnection_data\\NDAP_REPORT_6337.csv")
+```
+
+```{r}
+colnames(data12)
+```
+
+
+```{r internet not givable}
+hist(data12$Internet.Connections, 
+     col = '#43CD80', 
+     main = "Distribution of Total Area Under Micro Irrigation",
+     xlab = "Total Area Under Micro Irrigation ( Hectares )",
+     ylab = "Count of Sub-districts")
+
+# Add Median Line
+abline(v = median(data12$Internet.Connections, na.rm = TRUE), 
+       col = "darkslategray", 
+       lty = 2, 
+       lwd = 2)  # Blue dashed line for the median
+
+# Add Mean Line
+abline(v = mean(data12$Internet.Connections, na.rm = TRUE), 
+       col = "deeppink4", 
+       lty = 3, 
+       lwd = 2)  # Green dotted line for the mean
+
+# Add Legend
+legend("topright", 
+       legend = c("Median", "Mean"), 
+       col = c("darkslategray", "deeppink4"), 
+       lty = c(2, 3), 
+       lwd = 2, 
+       bty = "n")
+```
+
+```{r PMGSY}
+data13 <- read.csv("C:\\Users\\Shobhan Sarkar\\OneDrive\\Desktop\\DMS692_project\\PMGSY_data\\ZIP\\6336\\NDAP_REPORT_6336.csv")
+```
+
+```{r PMGSY}
+library(ggplot2)
+
+colnames(data13)
+```
+
+
+```{r PMGSY}
+hist(data13$Length.of.all.weather.road.completed.under.PMGSY, 
+     col = '#43CD80', 
+     main = "Distribution of Total Area Under Micro Irrigation",
+     xlab = "Total Area Under Micro Irrigation ( Hectares )",
+     ylab = "Count of Sub-districts")
+
+# Add Median Line
+abline(v = median(data13$Length.of.all.weather.road.completed.under.PMGSY, na.rm = TRUE), 
+       col = "darkslategray", 
+       lty = 2, 
+       lwd = 2)  # Blue dashed line for the median
+
+# Add Mean Line
+abline(v = mean(data13$Length.of.all.weather.road.completed.under.PMGSY, na.rm = TRUE), 
+       col = "deeppink4", 
+       lty = 3, 
+       lwd = 2)  # Green dotted line for the mean
+
+# Add Legend
+legend("topright", 
+       legend = c("Median", "Mean"), 
+       col = c("darkslategray", "deeppink4"), 
+       lty = c(2, 3), 
+       lwd = 2, 
+       bty = "n")
+```
+
+
+```{r}
+data14 <- read.csv("C:\\Users\\Shobhan Sarkar\\OneDrive\\Desktop\\DMS692_project\\part_data\\fresh_data.csv")
+```
+
+
+```{r}
+colnames(data14)
+```
+
+
+
+```{r}
+data14_filled <- data14
+for (col in names(data14)) {
+  data14_filled[[col]][is.na(data14_filled[[col]])] <- median(data14_filled[[col]], na.rm = TRUE)
+}
+
+#cov_matrix <- cov(data14_filled)
+#print(cov_matrix)
+
+```
+
+
+
+```{r}
+# Standardize all numeric columns
+data_scaled <- scale(data14_filled)
+
+# Compute variance-covariance matrix on scaled data
+cov_matrix_scaled <- cov(data_scaled)
+
+# Print the cleaned matrix
+#print(round(cov_matrix_scaled, 2))
+
+```
+
+```{r}
+colnames(data_scaled) <- paste0("V", 1:ncol(data_scaled))  # Rename columns as V1, V2, V3...
+cov_matrix_scaled <- cov(data_scaled)
+
+# Print properly formatted matrix
+print(round(cov_matrix_scaled, 2))
+
+```
+
+```{r}
+# Print matrix with proper alignment
+print(round(cov_matrix_scaled, 2), quote = FALSE)
+
+```
+
+```{r}
+View(data14_filled)
+```
+
+```{r}
+# Install corrplot package (if not already installed)
+install.packages("corrplot")
+
+# Load the package
+library(corrplot)
+
+# Visualize the covariance matrix
+corrplot(cov_matrix_scaled, 
+         method = "color",  # Use color gradient
+         col = colorRampPalette(c("blue", "white", "red"))(200), 
+         tl.cex = 0.8,      # Text size
+         addCoef.col = "black",  # Add coefficients
+         number.cex = 0.6)
+```
+
+
+```{r}
+# Set the file name and dimensions of the output PNG
+png("covariance_matrix_heatmap.png", width = 1200, height = 1000, res = 150)
+
+# Create the corrplot with the desired settings
+corrplot(cov_matrix_scaled, 
+         method = "color",  # Use color gradient
+         col = colorRampPalette(c("blue", "white", "red"))(200), 
+         tl.cex = 1,      # Increase text size for better visibility
+         addCoef.col = "black",  # Add coefficients in black
+         number.cex = 0.8)  # Adjust coefficient text size
+
+# Close the PNG device
+dev.off()
+
+```
+
+```{r}
+options(width = 400)  # Increase width for better display
+print(round(cov_matrix_scaled, 2))
+
+```
+
+
+```{r}
+colnames(data14_filled)
+```
+
+```{r malnourshied }
+data15 <- read.csv("C:\\Users\\Shobhan Sarkar\\OneDrive\\Desktop\\DMS692_project\\malnourished_income\\malnourshied_income.csv")
+```
+
+
+```{r}
+colnames(data15)
+```
+
+
+```{r}
+ggplot(data = data15, aes(x = Per_capita_Income_At_Constant_Prices_2018_19, y = Severe_Acute_Malnourishment_children_NH18_percent)) +
+  geom_point(color = '#5D478B') + # Scatter points
+  geom_smooth(method = "lm", col = "maroon4", se = TRUE, show.legend = FALSE) + # Trendline
+  labs(
+    title = "Per Capita Income & Sex Ratio in Karnataka", # Plot title
+    x = "Per capita Income At Constant Prices (2018-19)",          # X-axis label
+    y = "Sex Ratio (2011)" # Y-axis label
+  ) +
+  theme_minimal() + # Minimal theme
+  theme(
+    plot.title = element_text(hjust = 0.5,size = 14, face = "bold"),
+    axis.title.x = element_text(size = 13),
+    axis.title.y = element_text(size = 13),
+    panel.border = element_rect(color = "#8B6508", fill = NA, linewidth = 1) # Add border
+# Center the title
+  )
+#ggsave("Per_Capita_Income&sex_ratio.png", width = 6, height = 4, units = "in")
+
+```
+
+```{r}
+data16 <- read.csv("C:\\Users\\Shobhan Sarkar\\OneDrive\\Desktop\\DMS692_project\\SAM_under_6_data\\ZIP\\6234\\NDAP_REPORT_6234.csv")
+```
+
+
+
+```{r SAM}
+png("SAM.png")
+
+# Basic Histogram
+hist(data16$Severe.Acute.Malnourishment.children.NH18...., 
+     col = '#8B0000', 
+     main = "Severe Acute Malnourished children NH18 (%)",
+     xlab = "Severe Acute Malnourished children NH18 (%)",
+     ylab = "Count of Sub-districts")
+
+# Add Median Line
+abline(v = median(data16$Severe.Acute.Malnourishment.children.NH18...., na.rm = TRUE), 
+       col = "darkslategray", 
+       lty = 2, 
+       lwd = 2)  # Blue dashed line for the median
+
+# Add Mean Line
+abline(v = mean(data16$Severe.Acute.Malnourishment.children.NH18...., na.rm = TRUE), 
+       col = "#473C8B", 
+       lty = 3, 
+       lwd = 2)  # Green dotted line for the mean
+
+# Add Legend
+legend("topright", 
+       legend = c("Median", "Mean"), 
+       col = c("darkslategray", "#473C8B"), 
+       lty = c(2, 3), 
+       lwd = 2, 
+       bty = "n")
+dev.off()
+```
+
+
+```{r}
+data17 <- read.csv("C:\\Users\\Shobhan Sarkar\\OneDrive\\Desktop\\DMS692_project\\mobile_telephone_internetconnection_data\\NDAP_REPORT_6337.csv")
+```
+
+```{r}
+hist(data17$Internet.Connections, 
+     col = '#8B0000', 
+     main = "Internet",
+     xlab = "Severe Acute Malnourished children NH18 (%)",
+     ylab = "Count of Sub-districts")
+
+# Add Median Line
+abline(v = median(data17$Internet.Connections, na.rm = TRUE), 
+       col = "darkslategray", 
+       lty = 2, 
+       lwd = 2)  # Blue dashed line for the median
+
+# Add Mean Line
+abline(v = mean(data17$Internet.Connections, na.rm = TRUE), 
+       col = "#473C8B", 
+       lty = 3, 
+       lwd = 2)  # Green dotted line for the mean
+
+# Add Legend
+legend("topright", 
+       legend = c("Median", "Mean"), 
+       col = c("darkslategray", "#473C8B"), 
+       lty = c(2, 3), 
+       lwd = 2, 
+       bty = "n")
+```
+
+```{r}
+data18 <- read.csv("C:\\Users\\Shobhan Sarkar\\OneDrive\\Desktop\\DMS692_project\\toilet_data\\NDAP_REPORT_6249.csv")
+```
+
+```{r}
+colnames(data18)
+```
+
+
+```{r Latrine}
+png("latrine.png")
+hist(data18$Households.with.individual.latrines...., 
+     col = '#A1A1A1', 
+     main = "Households with Individual Latrine (%)",
+     xlab = "Households with Individual Latrine (%)",
+     ylab = "Count of Sub-districts")
+
+abline(v = median(data18$Households.with.individual.latrines...., na.rm = TRUE), 
+       col = "darkslategray", 
+       lty = 2, 
+       lwd = 2)  # Blue dashed line for the median
+
+# Add Mean Line
+abline(v = mean(data18$Households.with.individual.latrines...., na.rm = TRUE), 
+       col = "#473C8B", 
+       lty = 3, 
+       lwd = 2)  # Green dotted line for the mean
+
+# Add Legend
+legend("topleft", 
+       legend = c("Median", "Mean"), 
+       col = c("darkslategray", "#473C8B"), 
+       lty = c(2, 3), 
+       lwd = 2, 
+       bty = "n")
+dev.off()
+```
+
+```{r}
+data19 <- read.csv("C:\\Users\\Shobhan Sarkar\\OneDrive\\Desktop\\DMS692_project\\literacy\\ZIP\\6244\\NDAP_REPORT_6244.csv")
+```
+
+```{r}
+png("literacy.png")
+hist(data19$Total, 
+     col = '#FFA500', 
+     main = "Literacy Rate (%)",
+     xlab = "Literacy Rate (%)",
+     ylab = "Count of Sub-districts")
+
+abline(v = median(data19$Total, na.rm = TRUE), 
+       col = "darkslategray", 
+       lty = 2, 
+       lwd = 2)  # Blue dashed line for the median
+
+# Add Mean Line
+abline(v = mean(data19$Total, na.rm = TRUE), 
+       col = "#473C8B", 
+       lty = 3, 
+       lwd = 2)  # Green dotted line for the mean
+
+# Add Legend
+legend("topleft", 
+       legend = c("Median", "Mean"), 
+       col = c("darkslategray", "#473C8B"), 
+       lty = c(2, 3), 
+       lwd = 2, 
+       bty = "n")
+dev.off()
+```
+
+
+```{r}
+png("female_literacy.png")
+hist(data19$Total.Female, 
+     col = '#EEAEEE', 
+     main = "Female Literacy Rate (%)",
+     xlab = "Female Literacy Rate (%)",
+     ylab = "Count of Sub-districts")
+abline(v = median(data19$Total.Female, na.rm = TRUE), 
+       col = "darkslategray", 
+       lty = 2, 
+       lwd = 2)  # Blue dashed line for the median
+
+# Add Mean Line
+abline(v = mean(data19$Total.Female, na.rm = TRUE), 
+       col = "#473C8B", 
+       lty = 3, 
+       lwd = 2)  # Green dotted line for the mean
+
+# Add Legend
+legend("topleft", 
+       legend = c("Median", "Mean"), 
+       col = c("darkslategray", "#473C8B"), 
+       lty = c(2, 3), 
+       lwd = 2, 
+       bty = "n")
+dev.off()
+```
+
+
+```{r}
+data20 <- read.csv("C:\\Users\\Shobhan Sarkar\\OneDrive\\Desktop\\DMS692_project\\road_access\\NDAP_REPORT_6242.csv")
+```
+
+```{r}
+png("road_length.png")
+hist(data20$Road.length.per.100.Sqkms.area, 
+     col = '#D2B48C', 
+     main = "Road length per 100 Sqkms area in km",
+     xlab = "Road length per 100 Sqkms area (in km)",
+     ylab = "Count of Sub-districts")
+abline(v = median(data20$Road.length.per.100.Sqkms.area, na.rm = TRUE), 
+       col = "darkslategray", 
+       lty = 2, 
+       lwd = 2)  # Blue dashed line for the median
+
+# Add Mean Line
+abline(v = mean(data20$Road.length.per.100.Sqkms.area, na.rm = TRUE), 
+       col = "#473C8B", 
+       lty = 3, 
+       lwd = 2)  # Green dotted line for the mean
+
+# Add Legend
+legend("topleft", 
+       legend = c("Median", "Mean"), 
+       col = c("darkslategray", "#473C8B"), 
+       lty = c(2, 3), 
+       lwd = 2, 
+       bty = "n")
+dev.off()
+```
+
+```{r}
+data21 <- read.csv("C:\\Users\\Shobhan Sarkar\\OneDrive\\Desktop\\DMS692_project\\mudra_jibanjyotibima_data\\NDAP_REPORT_6251.csv")
+```
+
+```{r}
+hist(data21$Enrollment.per.lakh.population.under.Pradhan.Mantri.Jeevan.Jyoti.Bima.Yojana...PMJJBY.., 
+     col = '#CDCDC1', 
+     main = "Road length per 100 Sqkms area in km",
+     xlab = "Road length per 100 Sqkms area (in km)",
+     ylab = "Count of Sub-districts")
+```
+
+
+```{r}
+data22 <- read.csv("C:\\Users\\Shobhan Sarkar\\OneDrive\\Desktop\\DMS692_project\\part_data\\latrine_literacy.csv")
+```
+
+```{r}
+colnames(data22)
+```
+
+
+```{r}
+ggplot(data = data22, aes(x = Total, y = latrine)) +
+  geom_point(color = '#8968CD') + # Scatter points
+  geom_smooth(method = "lm", col = "black", se = TRUE, show.legend = FALSE) + # Trendline
+  labs(
+    title = "Literacy Rate (%) & Households with Individual Latrine (%)", # Plot title
+    x = "Literacy Rate (%)",          # X-axis label
+    y = "Households with Individual Latrine (%)" # Y-axis label
+  ) +
+  theme_minimal() + # Minimal theme
+  theme(
+    plot.title = element_text(hjust = 0.5,size = 14, face = "bold"),
+    axis.title.x = element_text(size = 13),
+    axis.title.y = element_text(size = 13),
+    panel.border = element_rect(color = "#8B6508", fill = NA, linewidth = 1) # Add border
+# Center the title
+  )
+ggsave("literacy_latrine.png", width = 6, height = 4, units = "in")
+
+```
+
+
+```{r}
+data23 <- read.csv("C:\\Users\\Shobhan Sarkar\\OneDrive\\Desktop\\DMS692_project\\part_data\\literacy_sex.csv")
+```
+
+```{r}
+colnames(data23)
+```
+
+
+```{r}
+ggplot(data = data23, aes(x = Total, y = Total.Sex.Ratio.2011)) +
+  geom_point(color = '#8968CD') + # Scatter points
+  geom_smooth(method = "lm", col = "black", se = TRUE, show.legend = FALSE) + # Trendline
+  labs(
+    title = "Literacy Rate (%) & Households with Individual Latrine (%)", # Plot title
+    x = "Literacy Rate (%)",          # X-axis label
+    y = "Households with Individual Latrine (%)" # Y-axis label
+  ) +
+  theme_minimal() + # Minimal theme
+  theme(
+    plot.title = element_text(hjust = 0.5,size = 14, face = "bold"),
+    axis.title.x = element_text(size = 13),
+    axis.title.y = element_text(size = 13),
+    panel.border = element_rect(color = "#8B6508", fill = NA, linewidth = 1) # Add border
+# Center the title
+  )
+```
+
+
+```{r}
+data24 <- read.csv("C:\\Users\\Shobhan Sarkar\\OneDrive\\Desktop\\DMS692_project\\part_data\\literacy_SAM.csv")
+```
+
+```{r}
+colnames(data24)
+```
+
+
+```{r}
+ggplot(data = data24, aes(x = Total, y = Severe.Acute.Malnourishment.children.NH18....)) +
+  geom_point(color = '#CD6839') + # Scatter points
+  geom_smooth(method = "lm", col = "black", se = TRUE, show.legend = FALSE) + # Trendline
+  labs(
+    title = "Literacy Rate & Severe Acute Malnourished children", # Plot title
+    x = "Literacy Rate (%)",          # X-axis label
+    y = "Severe Acute Malnourished children NH18 (%)" # Y-axis label
+  ) +
+  theme_minimal() + # Minimal theme
+  theme(
+    plot.title = element_text(hjust = 0.5,size = 14, face = "bold"),
+    axis.title.x = element_text(size = 13),
+    axis.title.y = element_text(size = 13),
+    panel.border = element_rect(color = "#8B7B8B", fill = NA, linewidth = 1) # Add border
+# Center the title
+  )
+ggsave("literacy_SAM.png", width = 6, height = 4, units = "in")
+
+```
+
+
+```{r}
+data25 <- read.csv("C:\\Users\\Shobhan Sarkar\\OneDrive\\Desktop\\DMS692_project\\part_data\\latrine_SAM.csv")
+```
+
+```{r}
+colnames(data25)
+```
+
+```{r}
+png("latrine_SAM.png")
+ggplot(data = data25, aes(x = Households.with.individual.latrines...., y = Severe.Acute.Malnourishment.children.NH18....)) +
+  geom_point(color = '#CD6839') + # Scatter points
+  geom_smooth(method = "lm", col = "black", se = TRUE, show.legend = FALSE) + # Trendline
+  labs(
+    title = "Individual Latrines & SAM Children", # Plot title
+    x = "Households with Individual Latrines (%)",          # X-axis label
+    y = "Severe Acute Malnourished children NH18 (%)" # Y-axis label
+  ) +
+  theme_minimal() + # Minimal theme
+  theme(
+    plot.title = element_text(hjust = 0.5,size = 14, face = "bold"),
+    axis.title.x = element_text(size = 13),
+    axis.title.y = element_text(size = 13),
+    panel.border = element_rect(color = "#8B7B8B", fill = NA, linewidth = 1) # Add border
+# Center the title
+  )
+dev.off()
+```
+
+```{r}
+data26 <- read.csv("C:\\Users\\Shobhan Sarkar\\OneDrive\\Desktop\\DMS692_project\\part_data\\rainfall_cropped_area.csv")
+```
+
+```{r}
+library(ggplot2)
+colnames(data26)
+```
+
+
+```{r}
+ggplot(data = data26, aes(x = Total.Area.under.Micro.Irrigation, y = Total.Cropped.Area)) +
+  geom_point(color = '#8B4C39') + # Scatter points
+  geom_smooth(method = "lm", col = "black", se = TRUE, show.legend = FALSE) + # Trendline
+  labs(
+    title = "Area Under Micro Irrigation & Cropped Area", # Plot title
+    x = "Area Under Micro Irrigation (in Ha)",          # X-axis label
+    y = "Cropped Area (in Ha)" # Y-axis label
+  ) +
+  theme_minimal() + # Minimal theme
+  theme(
+    plot.title = element_text(hjust = 0.5,size = 14, face = "bold"),
+    axis.title.x = element_text(size = 13),
+    axis.title.y = element_text(size = 13),
+    panel.border = element_rect(color = "#8B7B8B", fill = NA, linewidth = 1) # Add border
+# Center the title
+  )
+ggsave("Micro_irrigation_cropped_area.png", width = 6, height = 4, units = "in")
+
+```
+
+```{r}
+ggplot(data = data26, aes(x = Annual.Normal.Rainfall..1961...2010..Normal.Rainfall, y = Total.Cropped.Area)) +
+  geom_point(color = '#CD3278') + # Scatter points
+  geom_smooth(method = "lm", col = "black", se = TRUE, show.legend = FALSE) + # Trendline
+  labs(
+    title = "Annual Normal Rainfall (1961-2010) & Cropped Area", # Plot title
+    x = "Annual Normal Rainfall (1960-2010) (in mm)",          # X-axis label
+    y = "Cropped Area (in Ha)" # Y-axis label
+  ) +
+  theme_minimal() + # Minimal theme
+  theme(
+    plot.title = element_text(hjust = 0.5,size = 14, face = "bold"),
+    axis.title.x = element_text(size = 13),
+    axis.title.y = element_text(size = 13),
+    panel.border = element_rect(color = "#8B7B8B", fill = NA, linewidth = 1) # Add border
+# Center the title
+  )
+ggsave("rainfall_cropped_area.png", width = 6, height = 4, units = "in")
+
+```
+
+
+```{r}
+data27 <- read.csv("C:\\Users\\Shobhan Sarkar\\OneDrive\\Desktop\\DMS692_project\\part_data\\latrine_rural.csv")
+```
+
+```{r}
+colnames(data27)
+```
+
+```{r}
+ggplot(data = data27, aes(x = Total.Female, y = Households.with.individual.latrines....)) +
+  geom_point(color = '#8B4500') + # Scatter points
+  geom_smooth(method = "lm", col = "black", se = TRUE, show.legend = FALSE) + # Trendline
+  labs(
+    title = "Female Literacy & Households with Individual Latrines", # Plot title
+    x = "Female Literacy (%)",          # X-axis label
+    y = "Households with Individual Latrines (%)" # Y-axis label
+  ) +
+  theme_minimal() + # Minimal theme
+  theme(
+    plot.title = element_text(hjust = 0.5,size = 14, face = "bold"),
+    axis.title.x = element_text(size = 13),
+    axis.title.y = element_text(size = 13),
+    panel.border = element_rect(color = "#8B7B8B", fill = NA, linewidth = 1) # Add border
+# Center the title
+  )
+ggsave("female_literacy_latrine.png", width = 6, height = 4, units = "in")
+
+```
+
+
+```{r}
+ggplot(data = data27, aes(x = Total.Female, y = Severe.Acute.Malnourishment.children.NH18....)) +
+  geom_point(color = '#8B4500') + # Scatter points
+  geom_smooth(method = "lm", col = "black", se = TRUE, show.legend = FALSE) + # Trendline
+  labs(
+    title = "Female Literacy & Households with Individual Latrines", # Plot title
+    x = "Female Literacy (%)",          # X-axis label
+    y = "Households with Individual Latrines (%)" # Y-axis label
+  ) +
+  theme_minimal() + # Minimal theme
+  theme(
+    plot.title = element_text(hjust = 0.5,size = 14, face = "bold"),
+    axis.title.x = element_text(size = 13),
+    axis.title.y = element_text(size = 13),
+    panel.border = element_rect(color = "#8B7B8B", fill = NA, linewidth = 1) # Add border
+# Center the title
+  )
+```
+
+```{r}
+data28 <- read.csv("C:\\Users\\Shobhan Sarkar\\OneDrive\\Desktop\\DMS692_project\\part_data\\female_literacy_SAM.csv")
+```
+
+```{r}
+colnames(data28)
+```
+
+```{r}
+ggplot(data = data28, aes(x = Total.Female, y = Severe.Acute.Malnourishment.children.NH18....)) +
+  geom_point(color = '#8B4500') + # Scatter points
+  geom_smooth(method = "lm", col = "black", se = TRUE, show.legend = FALSE) + # Trendline
+  labs(
+    title = "Female Literacy & SAM Children", # Plot title
+    x = "Female Literacy (%)",          # X-axis label
+    y = "SAM Children NH18 (%)" # Y-axis label
+  ) +
+  theme_minimal() + # Minimal theme
+  theme(
+    plot.title = element_text(hjust = 0.5,size = 14, face = "bold"),
+    axis.title.x = element_text(size = 13),
+    axis.title.y = element_text(size = 13),
+    panel.border = element_rect(color = "#8B7B8B", fill = NA, linewidth = 1) # Add border
+# Center the title
+  )
+ggsave("female_literacy_SAM.png", width = 6, height = 4, units = "in")
+
+```
+
+
+```{r}
+data29 <- read.csv("C:\\Users\\Shobhan Sarkar\\OneDrive\\Desktop\\DMS692_project\\part_data\\latrine_sex.csv")
+```
+
+
+```{r}
+colnames(data29)
+```
+
+
+```{r}
+ggplot(data = data29, aes(x = Per.capita.Income...At.Constant.Prices..2018.19., y = Households.with.individual.latrines....)) +
+  geom_point(color = 'peachpuff4') + # Scatter points
+  geom_smooth(method = "lm", col = "black", se = TRUE, show.legend = FALSE) + # Trendline
+  labs(
+    title = "Per Capita Income & Households with Individual Latrines", # Plot title
+    x = "Per Capita Income @ Constant Prices (2018-19)",          # X-axis label
+    y = "Households with Individual Latrines (%)" # Y-axis label
+  ) +
+  theme_minimal() + # Minimal theme
+  theme(
+    plot.title = element_text(hjust = 0.5,size = 14, face = "bold"),
+    axis.title.x = element_text(size = 13),
+    axis.title.y = element_text(size = 13),
+    panel.border = element_rect(color = "#8B7B8B", fill = NA, linewidth = 1) # Add border
+# Center the title
+  )
+ggsave("PCY_latrine.png", width = 6, height = 4, units = "in")
+
+```
+
+
+```{r}
+data30 <- read.csv("C:\\Users\\Shobhan Sarkar\\OneDrive\\Desktop\\DMS692_project\\part_data\\SAM_rural.csv")
+```
+
+```{r}
+colnames(data30)
+```
+
+
+```{r}
+ggplot(data = data30, aes(x = Rural.Population, y = Severe.Acute.Malnourishment.children.NH18....)) +
+  geom_point(color = 'peachpuff4') + # Scatter points
+  geom_smooth(method = "lm", col = "black", se = TRUE, show.legend = FALSE) + # Trendline
+  labs(
+    title = "Female Literacy & Households with Individual Latrines", # Plot title
+    x = "Female Literacy (%)",          # X-axis label
+    y = "Households with Individual Latrines (%)" # Y-axis label
+  ) +
+  theme_minimal() + # Minimal theme
+  theme(
+    plot.title = element_text(hjust = 0.5,size = 14, face = "bold"),
+    axis.title.x = element_text(size = 13),
+    axis.title.y = element_text(size = 13),
+    panel.border = element_rect(color = "#8B7B8B", fill = NA, linewidth = 1) # Add border
+# Center the title
+  )
+```
+
+```{r}
+data31 <- read.csv("C:\\Users\\Shobhan Sarkar\\OneDrive\\Desktop\\DMS692_project\\part_data\\literacy_PCY.csv")
+```
+
+```{r}
+colnames(data31)
+```
+
+```{r}
+ggplot(data = data31, aes(x = Total, y = Per.capita.Income...At.Constant.Prices..2018.19.)) +
+  geom_point(color = '#8B3A62') + # Scatter points
+  geom_smooth(method = "lm", col = "black", se = TRUE, show.legend = FALSE) + # Trendline
+  labs(
+    title = "Literacy Rate & Per Capita Income", # Plot title
+    x = "Literacy Rate (%)",          # X-axis label
+    y = "Per Capita Income @ Constant Prices (2018-19)" # Y-axis label
+  ) +
+  theme_minimal() + # Minimal theme
+  theme(
+    plot.title = element_text(hjust = 0.5,size = 14, face = "bold"),
+    axis.title.x = element_text(size = 13),
+    axis.title.y = element_text(size = 12),
+    panel.border = element_rect(color = "#8B7B8B", fill = NA, linewidth = 1) # Add border
+# Center the title
+  )
+ggsave("PCY_literacy.png", width = 6, height = 4, units = "in")
+
+```
+
+
+```{r}
+data32 <- read.csv("C:\\Users\\Shobhan Sarkar\\OneDrive\\Desktop\\DMS692_project\\part_data\\literacy_rural.csv")
+```
+
+```{r}
+colnames(data32)
+```
+
+```{r}
+ggplot(data = data32, aes(x = Total, y = Rural.Population)) +
+  geom_point(color = '#8B3A62') + # Scatter points
+  geom_smooth(method = "lm", col = "black", se = TRUE, show.legend = FALSE) + # Trendline
+  labs(
+    title = "Literacy Rate & Per Capita Income", # Plot title
+    x = "Literacy Rate (%)",          # X-axis label
+    y = "Per Capita Income @ Constant Prices (2018-19)" # Y-axis label
+  ) +
+  theme_minimal() + # Minimal theme
+  theme(
+    plot.title = element_text(hjust = 0.5,size = 14, face = "bold"),
+    axis.title.x = element_text(size = 13),
+    axis.title.y = element_text(size = 12),
+    panel.border = element_rect(color = "#8B7B8B", fill = NA, linewidth = 1) # Add border
+# Center the title
+  )
+```
+
+```{r}
+data33 <- read.csv("C:\\Users\\Shobhan Sarkar\\OneDrive\\Desktop\\DMS692_project\\part_data\\mobile_internet_accounts_with_aadhar.csv")
+```
+
+```{r}
+colnames(data33)
+```
+
+```{r}
+ggplot(data = data33, aes(x = Internet_Connections, y = Accounts_seeded_with_Aadhaar_percent)) +
+  geom_point(color = '#36648B') + # Scatter points
+  geom_smooth(method = "lm", col = "black", se = TRUE, show.legend = FALSE) + # Trendline
+  labs(
+    title = "Internet Connections & Aadhaar-seeded Accounts", # Plot title
+    x = "Internet Connections",          # X-axis label
+    y = "Accounts seeded with Aadhaar (%)" # Y-axis label
+  ) +
+  theme_minimal() + # Minimal theme
+  theme(
+    plot.title = element_text(hjust = 0.5,size = 14, face = "bold"),
+    axis.title.x = element_text(size = 13),
+    axis.title.y = element_text(size = 12),
+    panel.border = element_rect(color = "#8B7B8B", fill = NA, linewidth = 1) # Add border
+# Center the title
+  )
+ggsave("internet_aadhaar.png", width = 6, height = 4, units = "in")
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+

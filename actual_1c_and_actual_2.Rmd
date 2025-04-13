@@ -1,0 +1,232 @@
+---
+title: "actual_1c"
+author: "shobhan sarkar"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r}
+data1 = read.csv("C:\\Users\\Shobhan Sarkar\\OneDrive\\Desktop\\DMS_assignment_02\\data\\literacy_rainfall_actual.csv")
+# Load required packages
+library(tidyverse)
+library(car)       # For Levene's test
+library(ggpubr)    # For publication-ready plots
+library(rstatix)
+```
+
+```{r}
+data1 <- data1 %>%
+  mutate(
+    rainfall_group = case_when(
+      `Annual_Normal_Rainfall_1961_2010` < quantile(`Annual_Normal_Rainfall_1961_2010`, 0.33) ~ "Low",
+      `Annual_Normal_Rainfall_1961_2010` > quantile(`Annual_Normal_Rainfall_1961_2010`, 0.66) ~ "High",
+      TRUE ~ "Medium"
+    ),
+    rainfall_group = factor(rainfall_group, levels = c("Low", "Medium", "High"))
+  )
+
+# Check group distribution
+table(data1$rainfall_group)
+```
+
+
+```{r}
+ggplot(data1, aes(x = Annual_Normal_Rainfall_1961_2010, y = `Total_literacy`, fill = Annual_Normal_Rainfall_1961_2010)) +
+  geom_boxplot(alpha = 0.7) +
+  geom_jitter(width = 0.1, alpha = 0.5) +
+  labs(title = "Literacy Rates by Rainfall Groups",
+       x = "Rainfall Category",
+       y = "Literacy Rate (%)") +
+  theme_minimal()
+```
+
+
+
+```{r}
+data1 %>%
+  group_by(rainfall_group) %>%
+  shapiro_test(`Total_literacy`)
+
+# ii) Homogeneity of variances
+leveneTest(`Total_literacy` ~ rainfall_group, data = data1)
+
+# 4. Perform ANOVA
+# ----------------
+anova_result <- aov(`Total_literacy` ~ rainfall_group, data = data1)
+summary(anova_result)
+
+```
+
+```{r}
+oneway.test(`Total_literacy` ~ rainfall_group, data = data1, var.equal = FALSE)
+
+# 5. Post-hoc tests (if ANOVA is significant)
+# -------------------------------------------
+# Tukey HSD for pairwise comparisons
+tukey_result <- TukeyHSD(anova_result)
+tukey_result
+
+# Effect size (η²)
+eta_squared(anova_result)
+```
+```{r}
+kruskal.test(`Total_literacy` ~ rainfall_group, data = data1)
+
+# Dunn's post-hoc test
+install.packages("FSA")
+library(FSA)
+dunnTest(`Total_literacy` ~ rainfall_group, data = data1, method = "bonferroni")
+
+# 7. Reporting-ready results
+# --------------------------
+# ANOVA table
+anova_summary <- anova_result %>%
+  tidy() %>%
+  mutate(
+    across(where(is.numeric), ~ round(., 3))
+  )
+
+```
+
+```{r question 2}
+# Load libraries
+library(sandwich)
+library(lmtest)
+library(dplyr)
+install.packages("kableExtra")
+library(kableExtra)
+data2 = read.csv("C:\\Users\\Shobhan Sarkar\\OneDrive\\Desktop\\DMS_assignment_02\\data\\five_var.csv")
+
+
+data2 <- data2 %>%
+  mutate(
+    rainfall_group = case_when(
+      `Annual_Normal_Rainfall_1961_2010` < quantile(`Annual_Normal_Rainfall_1961_2010`, 0.33) ~ "Low",
+      `Annual_Normal_Rainfall_1961_2010` > quantile(`Annual_Normal_Rainfall_1961_2010`, 0.66) ~ "High",
+      TRUE ~ "Medium"
+    ),
+    rainfall_group = factor(rainfall_group, levels = c("Low", "Medium", "High"))
+  )
+
+colnames(data2)
+dvs <- data2 %>%
+  select(
+    Total_literacy,
+    'Internet_Connections',
+    'Mobile_Phones'
+  ) %>%
+  scale() %>%
+  as.matrix()
+# Fit model
+model2 <- lm(dvs ~ rainfall_group + Households_with_individual_latrine_percent, data = data2)
+
+# Apply Huber-White robust SEs (HC3)
+robust_results <- coeftest(model2, vcov = vcovHC(model2, type = "HC3"))
+
+tidy_results <- data.frame(
+  Term = c("Intercept", "Rainfall: Medium vs Low", "Rainfall: High vs Low", "Per Capita Income (₹ lakhs)"),
+  Estimate = round(robust_results[, 1], 3),
+  Std_Error = round(robust_results[, 2], 3),
+  t_value = round(robust_results[, 3], 2),
+  p_value = scales::pvalue(robust_results[, 4])
+)
+summary(model2)
+# Format results
+#tidy_results <- data.frame(
+  #Term = c("Intercept", "Rainfall: Medium vs Low", "Rainfall: High vs Low", "Per Capita Income (₹ lakhs)"),
+  #Estimate = round(robust_results[, 1], 3),
+  #Std_Error = round(robust_results[, 2], 3),
+  #t_value = round(robust_results[, 3], 2),
+ # p_value = scales::pvalue(robust_results[, 4])
+#)
+
+# Print table
+#kable(tidy_results, align = "c", caption = "Multivariate Regression with Robust SEs") %>%
+  #kable_styling(full_width = FALSE)
+```
+
+
+```{r}
+# Load required libraries
+library(tidyverse)
+library(kableExtra)
+
+# Create a tidy dataframe of your results
+results <- tibble(
+  `Dependent Variable` = c(
+    rep("Total Literacy (%)", 4),
+    rep("Household Latrine (%)", 4),
+    rep("Internet Connections", 4)
+  ),
+  Predictor = rep(c(
+    "Intercept", 
+    "Rainfall: Medium vs Low",
+    "Rainfall: High vs Low",
+    "Household Latrine Coverage (%)"
+  ), 3),
+  Estimate = c(
+    -2.509, -0.002, 0.706, 0.027,
+    -6.351, 0.000, 0.000, 0.075,
+    -0.921, 0.313, 0.081, 0.009
+  ),
+  Std_Error = c(
+    0.465, 0.142, 0.147, 0.006,
+    0.000, 0.000, 0.000, 0.000,
+    0.542, 0.173, 0.096, 0.007
+  ),
+  t_value = c(
+    -5.40, -0.01, 4.82, 4.74,
+    -2.83e15, 0.30, -2.59, 2.66e15,
+    -1.70, 1.81, 0.84, 1.37
+  ),
+  p_value = c(
+    "<.001", ".991", "<.001", "<.001",
+    "<.001", ".763", ".010", "<.001",
+    ".091", ".072", ".399", ".172"
+  )
+)
+
+# Create publication-ready table
+results %>%
+  mutate(
+    `Coefficient (SE)` = sprintf("%.3f (%.3f)", Estimate, Std_Error),
+    ` ` = ifelse(p_value == "<.001", paste0("**", p_value, "**"), p_value)
+  ) %>%
+  select(`Dependent Variable`, Predictor, `Coefficient (SE)`, t_value, ` `) %>%
+  kable(
+    caption = "Multivariate Regression Results with Robust Standard Errors",
+    align = c("l", "l", "r", "r", "r"),
+    col.names = c("Dependent Variable", "Predictor", "b (SE)", "t", "p"),
+    digits = 3
+  ) %>%
+  kable_classic(full_width = FALSE, html_font = "Cambria") %>%
+  kable_styling(
+    bootstrap_options = c("striped", "condensed"),
+    font_size = 12
+  ) %>%
+  pack_rows("Total Literacy (%)", 1, 4, bold = TRUE) %>%
+  pack_rows("Household Latrine (%)", 5, 8, bold = TRUE) %>%
+  pack_rows("Internet Connections", 9, 12, bold = TRUE) %>%
+  add_header_above(c(" " = 2, "Estimate" = 1, "Test Statistic" = 2)) %>%
+  footnote(
+    general = "Note: Standard errors are robust to heteroscedasticity. **p < .001",
+    general_title = "",
+    footnote_as_chunk = TRUE
+  ) %>%
+  column_spec(3, background = "#f7f7f7") %>%
+  column_spec(5, bold = TRUE)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
